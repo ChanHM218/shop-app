@@ -1,25 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
+import { useFetch } from '../hooks/useFetch';
 import ProductCard from '../components/ProductCard';
 
-function Home({ products, loading, error }) {
+function Home() {
+  const { data: products, loading, error } = useFetch('https://fakestoreapi.com/products');
+  const { data: categories } = useFetch('https://fakestoreapi.com/products/categories');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products/categories')
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  }, []);
+  const filteredProducts = useMemo(() => {
+    console.log('Recalculating filtered products...');
+    if (!products) return [];
+
+    return products.filter((product) => {
+      const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+      return matchesSearch && matchesCategory;
+    });
+  }, [products, searchTerm, selectedCategory]);
 
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Something went wrong: {error}</p>;
-
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
 
   return (
     <div>
@@ -30,10 +31,9 @@ function Home({ products, loading, error }) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-
         <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
           <option value="all">All Categories</option>
-          {categories.map((category) => (
+          {categories?.map((category) => (
             <option key={category} value={category}>{category}</option>
           ))}
         </select>

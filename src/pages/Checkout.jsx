@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../hooks/useCart';
 
 function Checkout() {
   const { cartItems, cartCount, clearCart } = useCart();

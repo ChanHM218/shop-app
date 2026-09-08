@@ -1,21 +1,11 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { useCart } from '../context/CartContext';
+import { useFetch } from '../hooks/useFetch';
+import { useCart } from '../hooks/useCart';
 
 function ProductDetail() {
   const { id } = useParams();
   const { addToCart } = useCart();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`https://fakestoreapi.com/products/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(data);
-        setLoading(false);
-      });
-  }, [id]);
+  const { data: product, loading } = useFetch(`https://fakestoreapi.com/products/${id}`);
 
   if (loading) return <p>Loading...</p>;
 
