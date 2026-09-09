@@ -1,17 +1,25 @@
 import { useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { useFetch } from '../hooks/useFetch';
 import { useCart } from '../hooks/useCart';
 import { useReviews } from '../hooks/useReviews';
 
 function ProductDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { addToCart } = useCart();
   const { data: product, loading } = useFetch(`https://fakestoreapi.com/products/${id}`);
   const { reviews, addReview, deleteReview } = useReviews(id);
 
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
+
+  const handleAddToCart = () => {
+    const added = addToCart(product);
+    if (!added) {
+      navigate('/login', { state: { message: 'Log in to add items to your cart.' } });
+    }
+  };
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +36,7 @@ function ProductDetail() {
       <h2>{product.title}</h2>
       <p>{product.description}</p>
       <p><strong>${product.price}</strong></p>
-      <button onClick={() => addToCart(product)}>Add to Cart</button>
+      <button onClick={handleAddToCart}>Add to Cart</button>
 
       <div className="reviews">
         <h3>Customer Reviews</h3>
@@ -42,19 +50,8 @@ function ProductDetail() {
         ))}
 
         <form onSubmit={handleReviewSubmit}>
-          <input
-            type="text"
-            placeholder="Your name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Write a review..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            required
-          />
+          <input type="text" placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)} required />
+          <textarea placeholder="Write a review..." value={comment} onChange={(e) => setComment(e.target.value)} required />
           <button type="submit">Submit Review</button>
         </form>
       </div>

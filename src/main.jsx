@@ -5,13 +5,16 @@ import './index.css'
 import App from './App.jsx'
 import { CartProvider } from './context/CartContext.jsx'
 import ErrorFallback from './components/ErrorFallback.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <CartProvider>
-        <App />
-      </CartProvider>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <AuthProvider>
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </AuthProvider>
     </ErrorBoundary>
   </StrictMode>,
 )

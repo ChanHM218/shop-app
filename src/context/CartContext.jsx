@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import { CartContext } from './cart-context';
+import { useAuth } from '../hooks/useAuth';
 
 function cartReducer(state, action) {
   switch (action.type) {
@@ -29,9 +30,17 @@ function cartReducer(state, action) {
 }
 
 export function CartProvider({ children }) {
+  const { isLoggedIn } = useAuth();
   const [cartItems, dispatch] = useReducer(cartReducer, []);
 
-  const addToCart = (product) => dispatch({ type: 'ADD_ITEM', payload: product });
+  const addToCart = (product) => {
+    if (!isLoggedIn) {
+      return false;
+    }
+    dispatch({ type: 'ADD_ITEM', payload: product });
+    return true;
+  };
+
   const removeFromCart = (id) => dispatch({ type: 'REMOVE_ITEM', payload: id });
   const clearCart = () => dispatch({ type: 'CLEAR_CART' });
 

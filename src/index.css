@@ -152,3 +152,47 @@ button:hover { opacity: 0.9; }
   border: 1px solid #d1d5db;
   border-radius: var(--radius);
 }
+
+.navbar .nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.login-page {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.login-hint {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin-bottom: 1rem;
+}
+
+.login-page form div {
+  margin-bottom: 1rem;
+}
+
+.login-page label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.login-page input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d1d5db;
+  border-radius: var(--radius);
+}
+
+.login-redirect-message {
+  background: #fff3cd;
+  border: 1px solid #ffe69c;
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
