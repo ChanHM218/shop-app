@@ -6,9 +6,9 @@ export function useFetch(url) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-useEffect(() => {
+  useEffect(() => {
     setLoading(true);
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- resetting error before a new fetch starts; there's no derived-state equivalent for in-flight async status
+    // oxlint-disable-next-line react/set-state-in-effect -- resetting error before a new fetch starts; there's no derived-state equivalent for in-flight async status
     setError(null);
 
     fetch(url)
