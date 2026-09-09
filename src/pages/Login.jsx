@@ -27,7 +27,7 @@ function Login() {
       })
       .then((data) => {
         login(data.token, username);
-        navigate('/');
+        navigate(location.state?.from || '/');
       })
       .catch((err) => {
         setError(err.message);

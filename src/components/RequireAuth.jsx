@@ -9,7 +9,7 @@ function RequireAuth({ children }) {
     return (
       <Navigate
         to="/login"
-        state={{ message: 'Log in to continue to checkout.' }}
+        state={{ message: 'Log in to continue to checkout.', from: location.pathname }}
         replace
       />
     );
