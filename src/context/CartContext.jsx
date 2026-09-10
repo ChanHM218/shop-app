@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import { CartContext } from './cart-context';
 import { useAuth } from '../hooks/useAuth';
 
-function cartReducer(state, action) {
+export function cartReducer(state, action) {
   switch (action.type) {
     case 'ADD_ITEM': {
       const existingItem = state.find((item) => item.id === action.payload.id);
