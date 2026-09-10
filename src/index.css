@@ -196,3 +196,14 @@ button:hover { opacity: 0.9; }
   margin-bottom: 1rem;
   font-size: 0.9rem;
 }
+
+.not-found-page {
+  max-width: 500px;
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.not-found-page a {
+  color: var(--color-accent);
+  font-weight: 600;
+}

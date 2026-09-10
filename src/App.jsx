@@ -8,6 +8,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Login from './pages/Login';
 import RequireAuth from './components/RequireAuth';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [cartCount, setCartCount] = useState(0);
@@ -43,6 +44,7 @@ function App() {
         />
         <Route path="/product/:id" element={<ProductDetail onAddToCart={handleAddToCart} />} />
         <Route path="/cart" element={<Cart cartCount={cartCount} />} />
+        <Route path="*" element={<NotFound />} />
         <Route
   path="/checkout"
   element={
